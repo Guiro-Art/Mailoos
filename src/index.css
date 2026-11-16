@@ -1,0 +1,493 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --app-primary: #2563eb;
+  --app-primary-hover: #1d4ed8;
+  --app-primary-light: rgba(37, 99, 235, 0.12);
+  --app-primary-ring: rgba(37, 99, 235, 0.28);
+}
+
+/* ========================================================
+   Brand Theme Dynamic Coloring (Buttons, Text, Links, Badges)
+   Synchronized in real-time with settings palette & picker
+   ======================================================== */
+
+/* Primary action buttons, badges, indicators and chart bars */
+button.bg-blue-600,
+a.bg-blue-600,
+div.bg-blue-600,
+span.bg-blue-600,
+.bg-blue-600,
+.btn-primary,
+[class~="bg-blue-600"],
+[class~="bg-blue-500"] {
+  background-color: var(--app-primary) !important;
+}
+
+button.bg-blue-600:hover,
+a.bg-blue-600:hover,
+div.bg-blue-600:hover,
+.btn-primary:hover,
+[class~="bg-blue-600"]:hover,
+.hover\:bg-blue-700:hover,
+.hover\:bg-blue-600:hover,
+[class*="hover:bg-blue-700"]:hover,
+[class*="hover:bg-blue-600"]:hover {
+  background-color: var(--app-primary-hover) !important;
+  filter: brightness(0.94);
+  transition: all 0.15s ease-in-out;
+}
+
+/* ALL primary accent texts across all pages (breadcrumbs, titles, links, counters, DNS types) */
+.text-blue-600,
+.text-blue-700,
+.text-blue-500,
+.text-blue-800,
+.text-blue-400,
+[class~="text-blue-600"],
+[class~="text-blue-700"],
+[class~="text-blue-500"],
+[class~="text-blue-400"],
+:where(.dark, .dark *) [class*="dark:text-blue-"],
+.app-primary-text {
+  color: var(--app-primary) !important;
+}
+
+/* Hover and group-hover text states: subtle and elegant */
+.hover\:text-blue-600:hover,
+.hover\:text-blue-700:hover,
+.hover\:text-blue-800:hover,
+.hover\:text-blue-500:hover,
+[class*="hover:text-blue-"]:hover,
+:where(.dark, .dark *) [class*="dark:hover:text-blue-"]:hover,
+.group:hover [class*="group-hover:text-blue-"] {
+  color: var(--app-primary-hover) !important;
+}
+
+/* Tinted icon backgrounds, badges, and row highlights */
+.bg-blue-50,
+.bg-blue-100,
+[class*="bg-blue-50"],
+[class*="bg-blue-100"],
+:where(.dark, .dark *) [class*="dark:bg-blue-950"],
+:where(.dark, .dark *) [class*="dark:bg-blue-900"],
+.app-primary-bg-light {
+  background-color: var(--app-primary-light) !important;
+}
+
+/* Group hover backgrounds */
+.group:hover [class*="group-hover:bg-blue-600"] {
+  background-color: var(--app-primary) !important;
+}
+
+.group:hover .group-hover\:text-white {
+  color: #ffffff !important;
+}
+
+/* Themed borders */
+.border-blue-200,
+.border-blue-300,
+.border-blue-400,
+.border-blue-500,
+.border-blue-600,
+[class*="border-blue-"],
+[class*="dark:border-blue-"] {
+  border-color: var(--app-primary) !important;
+}
+
+[class*="hover:border-blue-"]:hover {
+  border-color: var(--app-primary) !important;
+}
+
+/* ========================================================
+   Form input & select (champs de sélection) dynamic theme styling
+   High-visibility contrast for selection fields and option menus
+   ======================================================== */
+select,
+.theme-select {
+  color-scheme: light;
+  accent-color: var(--app-primary) !important;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+}
+
+:where(.dark, .dark *) select,
+:where(.dark, .dark *) .theme-select,
+html.dark select,
+html.dark .theme-select,
+.dark select,
+.dark .theme-select {
+  color-scheme: dark;
+}
+
+/* Base option & optgroup visibility: solid background and high contrast text */
+select option,
+select optgroup,
+.theme-select option,
+.theme-select optgroup {
+  background-color: #ffffff !important;
+  color: #0f172a !important; /* slate-900: sharp black-slate */
+  font-weight: 500 !important;
+  padding: 8px 12px !important;
+}
+
+/* Dark mode option & optgroup visibility */
+:where(.dark, .dark *) select option,
+:where(.dark, .dark *) select optgroup,
+:where(.dark, .dark *) .theme-select option,
+:where(.dark, .dark *) .theme-select optgroup,
+html.dark select option,
+html.dark select optgroup,
+html.dark .theme-select option,
+html.dark .theme-select optgroup,
+.dark select option,
+.dark select optgroup,
+.dark .theme-select option,
+.dark .theme-select optgroup {
+  background-color: #1e293b !important; /* slate-800 solid opaque background */
+  color: #f8fafc !important;            /* slate-50 high-contrast white text */
+  font-weight: 500 !important;
+  padding: 8px 12px !important;
+}
+
+/* Hover and focus on select triggers */
+select:hover:not(:disabled),
+.theme-select:hover:not(:disabled),
+:where(.dark, .dark *) select:hover:not(:disabled),
+:where(.dark, .dark *) .theme-select:hover:not(:disabled),
+html.dark select:hover:not(:disabled),
+html.dark .theme-select:hover:not(:disabled),
+.dark select:hover:not(:disabled),
+.dark .theme-select:hover:not(:disabled) {
+  border-color: var(--app-primary) !important;
+  box-shadow: 0 0 0 3px var(--app-primary-ring) !important;
+}
+
+input:hover:not(:disabled),
+textarea:hover:not(:disabled) {
+  border-color: var(--app-primary) !important;
+  background-color: var(--app-primary-light) !important;
+  box-shadow: 0 0 0 3px var(--app-primary-ring) !important;
+}
+
+select:focus,
+select:focus-visible,
+.theme-select:focus,
+.theme-select:focus-visible,
+:where(.dark, .dark *) select:focus,
+:where(.dark, .dark *) .theme-select:focus,
+html.dark select:focus,
+html.dark .theme-select:focus,
+.dark select:focus,
+.dark .theme-select:focus,
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible {
+  border-color: var(--app-primary) !important;
+  outline: none !important;
+  box-shadow: 0 0 0 3px var(--app-primary-ring) !important;
+}
+
+/* Selected option inside dropdowns */
+select option:checked,
+.theme-select option:checked,
+:where(.dark, .dark *) select option:checked,
+:where(.dark, .dark *) .theme-select option:checked,
+html.dark select option:checked,
+html.dark .theme-select option:checked,
+.dark select option:checked,
+.dark .theme-select option:checked {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+select option:hover,
+.theme-select option:hover,
+:where(.dark, .dark *) select option:hover,
+:where(.dark, .dark *) .theme-select option:hover,
+html.dark select option:hover,
+html.dark .theme-select option:hover,
+.dark select option:hover,
+.dark .theme-select option:hover {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+}
+
+/* Override any hardcoded Tailwind focus ring classes */
+.focus\:ring-blue-500:focus,
+.focus\:ring-blue-500\/20:focus,
+.focus\:border-blue-500:focus {
+  border-color: var(--app-primary) !important;
+  box-shadow: 0 0 0 3px var(--app-primary-light) !important;
+}
+
+/* Checkbox & Radio accent */
+input[type="checkbox"]:checked,
+input[type="radio"]:checked {
+  background-color: var(--app-primary) !important;
+  border-color: var(--app-primary) !important;
+  accent-color: var(--app-primary) !important;
+}
+
+/* Text highlight conforms to theme */
+::selection {
+  background-color: var(--app-primary-light);
+  color: var(--app-primary);
+}
+
+/* ========================================================
+   KPI Stat Cards Hover Text Visibility & Dark Mode Contrast
+   ======================================================== */
+.kpi-card {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+:where(.dark, .dark *) .kpi-card:hover {
+  background-color: #1e293b !important; /* slate-800 */
+  border-color: #334155 !important;     /* slate-700 */
+  box-shadow: 0 4px 18px -2px rgba(0, 0, 0, 0.45);
+}
+
+:where(.dark, .dark *) .kpi-card .kpi-title,
+:where(.dark, .dark *) .kpi-card:hover .kpi-title {
+  color: #f8fafc !important; /* luminous white-slate */
+}
+
+:where(.dark, .dark *) .kpi-card .kpi-value,
+:where(.dark, .dark *) .kpi-card:hover .kpi-value {
+  color: #ffffff !important; /* pure white */
+}
+
+:where(.dark, .dark *) .kpi-card .kpi-subtext,
+:where(.dark, .dark *) .kpi-card:hover .kpi-subtext,
+:where(.dark, .dark *) .kpi-card .kpi-subtext span,
+:where(.dark, .dark *) .kpi-card:hover .kpi-subtext span {
+  color: #cbd5e1 !important; /* slate-300 - clear, contrasted and crisp */
+}
+
+:where(:not(.dark)) .kpi-card:hover {
+  background-color: #f8fafc !important; /* slate-50 */
+  border-color: #cbd5e1 !important;     /* slate-300 */
+}
+
+:where(:not(.dark)) .kpi-card:hover .kpi-title {
+  color: #0f172a !important; /* slate-900 */
+}
+
+:where(:not(.dark)) .kpi-card:hover .kpi-value {
+  color: #020617 !important; /* slate-950 */
+}
+
+:where(:not(.dark)) .kpi-card:hover .kpi-subtext,
+:where(:not(.dark)) .kpi-card:hover .kpi-subtext span {
+  color: #334155 !important; /* slate-700 */
+}
+
+/* ========================================================
+   Sidebar Navigation & Buttons Dynamic Hover & Click Styling
+   ======================================================== */
+.sidebar-nav-item {
+  transition: all 0.15s ease-in-out;
+}
+
+/* Hover state: gentle, modern, professional tint */
+.sidebar-nav-item:not(.is-active):hover {
+  background-color: var(--app-primary-light) !important;
+  color: var(--app-primary) !important;
+}
+
+:where(.dark, .dark *) .sidebar-nav-item:not(.is-active):hover {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  color: #f8fafc !important;
+}
+
+.sidebar-nav-item:not(.is-active):hover svg,
+.sidebar-nav-item:not(.is-active):hover .sidebar-icon,
+html.dark .sidebar-nav-item:not(.is-active):hover svg,
+html.dark .sidebar-nav-item:not(.is-active):hover .sidebar-icon,
+.dark .sidebar-nav-item:not(.is-active):hover svg,
+.dark .sidebar-nav-item:not(.is-active):hover .sidebar-icon,
+:where(.dark, .dark *) .sidebar-nav-item:not(.is-active):hover svg,
+:where(.dark, .dark *) .sidebar-nav-item:not(.is-active):hover .sidebar-icon {
+  color: var(--app-primary) !important;
+  stroke: var(--app-primary) !important;
+}
+
+.sidebar-action-btn:hover svg,
+html.dark .sidebar-action-btn:hover svg,
+.dark .sidebar-action-btn:hover svg {
+  color: var(--app-primary) !important;
+  stroke: var(--app-primary) !important;
+}
+
+/* At the moment of click (active press state) */
+.sidebar-nav-item:active {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+  transform: scale(0.98);
+}
+
+.sidebar-nav-item:active svg {
+  color: #ffffff !important;
+}
+
+/* Active / Clicked state: EXACT solid color configured in settings */
+.sidebar-nav-item.is-active {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+  font-weight: 600;
+  box-shadow: 0 2px 8px -1px var(--app-primary-light);
+}
+
+.sidebar-nav-item.is-active:hover {
+  background-color: var(--app-primary-hover) !important;
+  color: #ffffff !important;
+}
+
+.sidebar-nav-item.is-active svg {
+  color: #ffffff !important;
+}
+
+/* Active indicator pill bar (if displayed) */
+.sidebar-active-indicator {
+  background-color: #ffffff !important;
+}
+
+/* Sidebar webmail & action buttons */
+.sidebar-action-btn:hover {
+  background-color: var(--app-primary-light) !important;
+  color: var(--app-primary) !important;
+}
+
+.sidebar-action-btn:hover svg {
+  color: var(--app-primary) !important;
+}
+
+.sidebar-action-btn:active {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+}
+
+.sidebar-action-btn:active svg {
+  color: #ffffff !important;
+}
+
+/* Sidebar enterprise selector button */
+.sidebar-enterprise-btn:hover {
+  border-color: var(--app-primary) !important;
+}
+
+.sidebar-enterprise-btn:hover svg {
+  color: var(--app-primary) !important;
+}
+
+/* Active dropdown enterprise item */
+.sidebar-dropdown-active {
+  background-color: var(--app-primary) !important;
+  color: #ffffff !important;
+}
+
+.sidebar-dropdown-active span.dot-indicator {
+  background-color: #ffffff !important;
+}
+
+/* ========================================================
+   Responsive & Touch Adaptation (Mobile, Tablet, Desktop)
+   ======================================================== */
+.overflow-x-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Mobile safe area padding for modern bezel-less smartphones */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .safe-area-bottom {
+    padding-bottom: calc(0.5rem + env(safe-area-inset-bottom));
+  }
+}
+
+/* Touch manipulation prevents 300ms click delay on tablets & phones */
+button, 
+a, 
+input, 
+select {
+  touch-action: manipulation;
+}
+
+/* Prevent unwanted mobile text zoom on inputs on iOS */
+@media screen and (max-width: 640px) {
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Smooth and sleek scrollbar for sidebar on rotated mobile/tablet/desktop */
+.sidebar-scrollable {
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
+  overscroll-behavior-y: contain;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(148, 163, 184, 0.45) transparent;
+}
+
+.sidebar-scrollable::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar-scrollable::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.sidebar-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 9999px;
+}
+
+.sidebar-scrollable::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.65);
+}
+
+/* ========================================================
+   Print Media Styles: Clean, professional document printing
+   ======================================================== */
+@media print {
+  aside,
+  header,
+  nav,
+  button,
+  input,
+  select,
+  .no-print {
+    display: none !important;
+  }
+
+  body, #root, main, div {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+    box-shadow: none !important;
+  }
+
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #cbd5e1 !important;
+    padding: 6px 10px !important;
+    color: #0f172a !important;
+  }
+
+  th {
+    background-color: #f1f5f9 !important;
+    font-weight: bold !important;
+  }
+}
+

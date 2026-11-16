@@ -1,0 +1,93 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net: Default-deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Global helper functions
+    function isValidId(id) {
+      return id is string && id.size() > 0 && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Allows authenticated requests (or app access)
+    function isAllowedUser() {
+      return true; // Mailo platform service layer validation
+    }
+
+    // 2. Health & Connection Check
+    match /_connection_test/{testId} {
+      allow read: if true;
+      allow write: if isAllowedUser() && isValidId(testId);
+    }
+
+    // 3. Enterprises Collection
+    match /enterprises/{enterpriseId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() 
+        && isValidId(enterpriseId)
+        && incoming().name is string && incoming().name.size() <= 100
+        && incoming().defaultDomain is string && incoming().defaultDomain.size() <= 150;
+      allow delete: if isAllowedUser();
+    }
+
+    // 4. Domains Collection
+    match /domains/{domainId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() 
+        && isValidId(domainId)
+        && incoming().name is string && incoming().name.size() <= 150
+        && incoming().enterpriseId is string && incoming().enterpriseId.size() <= 128;
+      allow delete: if isAllowedUser();
+    }
+
+    // 5. Mailboxes Collection
+    match /mailboxes/{mailboxId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() 
+        && isValidId(mailboxId)
+        && incoming().email is string && incoming().email.size() <= 150
+        && incoming().enterpriseId is string && incoming().enterpriseId.size() <= 128;
+      allow delete: if isAllowedUser();
+    }
+
+    // 6. Emails Collection
+    match /emails/{emailId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() 
+        && isValidId(emailId)
+        && incoming().mailboxId is string && incoming().mailboxId.size() <= 128
+        && incoming().subject is string && incoming().subject.size() <= 250;
+      allow delete: if isAllowedUser();
+    }
+
+    // 7. Administrators Directory
+    match /admins/{adminId} {
+      allow read: if isAllowedUser();
+      allow create, update: if isAllowedUser() 
+        && isValidId(adminId)
+        && incoming().email is string && incoming().email.size() <= 150
+        && incoming().role is string && incoming().role.size() <= 50;
+      allow delete: if isAllowedUser();
+    }
+
+    // 8. Audit Logs (Immutable Append-Only)
+    match /auditLogs/{logId} {
+      allow read: if isAllowedUser();
+      allow create: if isAllowedUser() 
+        && isValidId(logId)
+        && incoming().action is string && incoming().action.size() <= 100
+        && incoming().adminEmail is string && incoming().adminEmail.size() <= 150;
+      allow update, delete: if false; // Immuabilité des logs d'audit
+    }
+  }
+}

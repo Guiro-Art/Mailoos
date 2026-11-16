@@ -1,0 +1,8 @@
+{
+  "name": "Mailo",
+  "description": "Plateforme complète de gestion de messagerie d\u0027entreprise, création de boîtes mail, configuration DNS/domaines, import Excel, journal d\u0027audit et webmail intégré.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

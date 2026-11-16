@@ -1,0 +1,139 @@
+{
+  "entities": {
+    "enterprise": {
+      "title": "Enterprise",
+      "description": "Représente une organisation ou entreprise cliente sur la plateforme Mailoos.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string", "maxLength": 100 },
+        "plan": { "type": "string", "maxLength": 50 },
+        "defaultDomain": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "name", "plan", "defaultDomain"]
+    },
+    "domain": {
+      "title": "Domain",
+      "description": "Nom de domaine rattaché à une entreprise pour la messagerie.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enterpriseId": { "type": "string" },
+        "name": { "type": "string", "maxLength": 150 },
+        "isVerified": { "type": "boolean" },
+        "verifiedAt": { "type": "string" },
+        "recordsOkCount": { "type": "number" },
+        "totalRecordsCount": { "type": "number" },
+        "activeMailboxesCount": { "type": "number" },
+        "dkimKey": { "type": "string", "maxLength": 500 }
+      },
+      "required": ["id", "enterpriseId", "name", "isVerified"]
+    },
+    "mailbox": {
+      "title": "MailboxAccount",
+      "description": "Compte de messagerie professionnelle pour un collaborateur.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enterpriseId": { "type": "string" },
+        "firstName": { "type": "string", "maxLength": 60 },
+        "lastName": { "type": "string", "maxLength": 60 },
+        "name": { "type": "string", "maxLength": 120 },
+        "email": { "type": "string", "maxLength": 150 },
+        "password": { "type": "string", "maxLength": 100 },
+        "mailsCount": { "type": "number" },
+        "unreadCount": { "type": "number" },
+        "storageUsedBytes": { "type": "number" },
+        "storageLimitBytes": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "disabled"] },
+        "createdAt": { "type": "string" },
+        "domainName": { "type": "string", "maxLength": 150 }
+      },
+      "required": ["id", "enterpriseId", "email", "status"]
+    },
+    "email": {
+      "title": "EmailMessage",
+      "description": "Message e-mail stocké dans une boîte aux lettres.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enterpriseId": { "type": "string" },
+        "mailboxId": { "type": "string" },
+        "mailboxEmail": { "type": "string", "maxLength": 150 },
+        "from": { "type": "string", "maxLength": 150 },
+        "fromName": { "type": "string", "maxLength": 120 },
+        "to": { "type": "array" },
+        "subject": { "type": "string", "maxLength": 250 },
+        "body": { "type": "string", "maxLength": 10000 },
+        "date": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "isRead": { "type": "boolean" },
+        "folder": { "type": "string", "enum": ["inbox", "sent", "drafts", "spam", "trash"] }
+      },
+      "required": ["id", "mailboxId", "from", "subject", "folder"]
+    },
+    "admin": {
+      "title": "AdminUser",
+      "description": "Compte utilisateur d'administration ou gestionnaire d'entreprise.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enterpriseId": { "type": "string" },
+        "email": { "type": "string", "maxLength": 150 },
+        "name": { "type": "string", "maxLength": 100 },
+        "role": { "type": "string", "maxLength": 50 },
+        "status": { "type": "string", "enum": ["active", "inactive"] },
+        "has2FA": { "type": "boolean" },
+        "password": { "type": "string", "maxLength": 100 },
+        "isCreator": { "type": "boolean" },
+        "lastLogin": { "type": "string" },
+        "themeColor": { "type": "string", "maxLength": 20 }
+      },
+      "required": ["id", "email", "name", "role", "status"]
+    },
+    "auditLog": {
+      "title": "AuditLogEntry",
+      "description": "Journal immuable des événements et actions de sécurité.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "enterpriseId": { "type": "string" },
+        "date": { "type": "string" },
+        "timestamp": { "type": "number" },
+        "adminEmail": { "type": "string", "maxLength": 150 },
+        "action": { "type": "string", "maxLength": 100 },
+        "target": { "type": "string", "maxLength": 150 },
+        "detail": { "type": "string", "maxLength": 500 },
+        "ip": { "type": "string", "maxLength": 45 }
+      },
+      "required": ["id", "date", "adminEmail", "action", "target"]
+    }
+  },
+  "firestore": {
+    "/enterprises/{enterpriseId}": {
+      "schema": { "$ref": "#/entities/enterprise" },
+      "description": "Collection des entreprises enregistrées."
+    },
+    "/domains/{domainId}": {
+      "schema": { "$ref": "#/entities/domain" },
+      "description": "Collection des domaines de messagerie."
+    },
+    "/mailboxes/{mailboxId}": {
+      "schema": { "$ref": "#/entities/mailbox" },
+      "description": "Collection des boîtes de messagerie professionnelles."
+    },
+    "/emails/{emailId}": {
+      "schema": { "$ref": "#/entities/email" },
+      "description": "Collection des messages e-mails."
+    },
+    "/admins/{adminId}": {
+      "schema": { "$ref": "#/entities/admin" },
+      "description": "Collection des profils administrateurs."
+    },
+    "/auditLogs/{logId}": {
+      "schema": { "$ref": "#/entities/auditLog" },
+      "description": "Collection des logs d'audit et de conformité."
+    }
+  }
+}
